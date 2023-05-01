@@ -1,27 +1,35 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import * as esbuild from 'esbuild-wasm';
 import { unpkgPathPlugin } from './plugins/unpkg-path-find';
-
 await esbuild.initialize({
   worker: true,
   wasmURL: 'esbuild.wasm',
-});
-const result = await esbuild.build({
-  entryPoints: ['index.js'],
-  bundle: true,
-  write: false,
-  plugins: [unpkgPathPlugin()],
-  define: {
-    global: 'window',
-  },
 });
 
 function App() {
   const [input, setInput] = useState('');
   const [code, setCode] = useState('');
+  const ref = useRef<esbuild.BuildResult | undefined>();
 
   const onClick = async () => {
-    setCode(result.outputFiles[0].text);
+    const esSetting = async () => {
+      const result = await esbuild.build({
+        entryPoints: ['index.js'],
+        bundle: true,
+        write: false,
+        plugins: [unpkgPathPlugin()],
+        define: {
+          global: 'window',
+        },
+      });
+      ref.current = result;
+    };
+    esSetting();
+    if (ref.current && ref.current.outputFiles) {
+      setCode(ref.current.outputFiles[0]?.text ?? '');
+    } else {
+      setTimeout(onClick, 100);
+    }
   };
 
   return (

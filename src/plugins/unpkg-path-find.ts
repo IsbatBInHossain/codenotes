@@ -32,7 +32,6 @@ export const unpkgPathPlugin = () => {
             loader: 'jsx',
             contents: `
               import {useState} from 'react';
-              const _ = require('lodash');
               console.log(useState);
             `,
           };
