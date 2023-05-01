@@ -11,6 +11,9 @@ const result = await esbuild.build({
   bundle: true,
   write: false,
   plugins: [unpkgPathPlugin()],
+  define: {
+    global: 'window',
+  },
 });
 
 function App() {
