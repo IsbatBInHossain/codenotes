@@ -1,6 +1,7 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import * as esbuild from 'esbuild-wasm';
-import { unpkgPathPlugin } from './plugins/unpkg-path-find';
+import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
+import { fetchPlugin } from './plugins/fetch-plugin';
 await esbuild.initialize({
   worker: true,
   wasmURL: 'esbuild.wasm',
@@ -9,7 +10,6 @@ await esbuild.initialize({
 function App() {
   const [input, setInput] = useState('');
   const [code, setCode] = useState('');
-  const ref = useRef<esbuild.BuildResult | undefined>();
 
   const onClick = async () => {
     const esSetting = async () => {
@@ -17,19 +17,14 @@ function App() {
         entryPoints: ['index.js'],
         bundle: true,
         write: false,
-        plugins: [unpkgPathPlugin()],
+        plugins: [unpkgPathPlugin(), fetchPlugin(input)],
         define: {
           global: 'window',
         },
       });
-      ref.current = result;
+      setCode(result.outputFiles[0].text);
     };
     esSetting();
-    if (ref.current && ref.current.outputFiles) {
-      setCode(ref.current.outputFiles[0]?.text ?? '');
-    } else {
-      setTimeout(onClick, 100);
-    }
   };
 
   return (
@@ -37,6 +32,7 @@ function App() {
       <textarea
         value={input}
         onChange={e => setInput(e.target.value)}
+        style={{ width: '500px', height: '120px' }}
       ></textarea>
       <div>
         <button onClick={onClick}>Submit</button>
