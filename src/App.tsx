@@ -4,7 +4,7 @@ import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 import { fetchPlugin } from './plugins/fetch-plugin';
 await esbuild.initialize({
   worker: true,
-  wasmURL: 'esbuild.wasm',
+  wasmURL: 'https://www.unpkg.com/esbuild-wasm@0.17.18/esbuild.wasm',
 });
 
 function App() {
