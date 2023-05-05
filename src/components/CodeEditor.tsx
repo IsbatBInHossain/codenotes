@@ -1,10 +1,7 @@
 import Editor, { OnChange, OnMount } from '@monaco-editor/react';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
-import monaco from 'monaco-editor';
-// import {parse} from "@babel/parser";
-// import traverse from "@babel/traverse";
-// import MonacoJSXHighlighter from 'monaco-jsx-highlighter';
+import * as monaco from 'monaco-editor';
 import { useRef } from 'react';
 import './CodeEditor.css';
 
@@ -13,7 +10,7 @@ interface CodeEditorProps {
   onChange(value: string | undefined): void;
 }
 
-const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
+function CodeEditor({ initialValue, onChange }: CodeEditorProps): JSX.Element {
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
   const handleEditorDidMount: OnMount = editor => {
@@ -71,5 +68,5 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
       />
     </div>
   );
-};
+}
 export default CodeEditor;
