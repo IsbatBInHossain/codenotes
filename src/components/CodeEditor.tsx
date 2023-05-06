@@ -50,7 +50,7 @@ function CodeEditor({ initialValue, onChange }: CodeEditorProps): JSX.Element {
         value={initialValue}
         onMount={handleEditorDidMount}
         onChange={handleEditorChange}
-        height='500px'
+        height='100%'
         defaultLanguage='javascript'
         theme='vs-dark'
         options={{
