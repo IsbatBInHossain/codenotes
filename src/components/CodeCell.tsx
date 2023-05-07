@@ -25,9 +25,11 @@ function App() {
   };
 
   return (
-    <ResizableComponent direction='vertical' width={300} height={300}>
+    <ResizableComponent direction='vertical'>
       <div className='codecell-wrapper'>
-        <CodeEditor initialValue='// Write Code Here' onChange={onChange} />
+        <ResizableComponent direction='horizontal'>
+          <CodeEditor initialValue='// Write Code Here' onChange={onChange} />
+        </ResizableComponent>
         {/* <div>
           <button onClick={onClick}>Submit</button>
         </div> */}
