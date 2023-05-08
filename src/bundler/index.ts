@@ -11,14 +11,27 @@ export default async (rawCode: string) => {
     });
     service = true;
   }
-  const result = await esbuild.build({
-    entryPoints: ['index.js'],
-    bundle: true,
-    write: false,
-    plugins: [unpkgPathPlugin(), fetchPlugin(rawCode)],
-    define: {
-      global: 'window',
-    },
-  });
-  return result.outputFiles[0].text;
+  try {
+    const result = await esbuild.build({
+      entryPoints: ['index.js'],
+      bundle: true,
+      write: false,
+      plugins: [unpkgPathPlugin(), fetchPlugin(rawCode)],
+      define: {
+        global: 'window',
+      },
+    });
+    return {
+      code: result.outputFiles[0].text,
+      error: '',
+    };
+  } catch (error) {
+    let message;
+    if (error instanceof Error) message = error.message;
+    else message = String(error);
+    return {
+      code: '',
+      error: message,
+    };
+  }
 };

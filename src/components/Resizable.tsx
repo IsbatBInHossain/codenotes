@@ -1,24 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ResizableBox, ResizableBoxProps } from 'react-resizable';
-import './Resizable.css';
+import './styles/Resizable.css';
 
 interface ResizableComponentProps {
   direction: 'horizontal' | 'vertical';
   children: React.ReactNode;
-  // width: number;
-  // height: number;
 }
-// type CombinedProps = ResizableBoxProps & ResizableComponentProps;
 
 const ResizableComponent: React.FC<ResizableComponentProps> = ({
   direction,
   children,
 }) => {
+  const [innerHeight, setInnerHeight] = useState(window.innerHeight);
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  const [width, setWidth] = useState(window.innerWidth * 0.75);
+
+  useEffect(() => {
+    let timer: number;
+
+    const handleResize = () => {
+      if (timer) {
+        clearInterval(timer);
+      }
+      timer = setTimeout(() => {
+        setInnerHeight(window.innerHeight);
+        setInnerWidth(window.innerWidth);
+        if (window.innerWidth * 0.75 < width) {
+          setWidth(window.innerWidth * 0.75);
+        }
+      }, 100);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [width]);
+
   let resizableProps: ResizableBoxProps;
+
   if (direction === 'vertical') {
     resizableProps = {
       minConstraints: [Infinity, 30],
-      maxConstraints: [Infinity, window.innerHeight * 0.9],
+      maxConstraints: [Infinity, innerHeight * 0.9],
       height: 300,
       width: Infinity,
       resizeHandles: ['s'],
@@ -26,11 +49,14 @@ const ResizableComponent: React.FC<ResizableComponentProps> = ({
   } else {
     resizableProps = {
       className: 'resizable-horizontal',
-      minConstraints: [window.innerWidth * 0.2, Infinity],
-      maxConstraints: [window.innerWidth * 0.75, Infinity],
+      minConstraints: [innerWidth * 0.2, Infinity],
+      maxConstraints: [innerWidth * 0.75, Infinity],
       height: Infinity,
-      width: window.innerWidth * 0.75,
+      width: width,
       resizeHandles: ['e'],
+      onResizeStop: (_event, data) => {
+        setWidth(data.size.width);
+      },
     };
   }
 

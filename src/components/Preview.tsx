@@ -1,8 +1,9 @@
 import { useRef, useEffect } from 'react';
-import './Preview.css';
+import './styles/Preview.css';
 
 interface PreviewProps {
   code: string;
+  error: string;
 }
 const html = `
 <!DOCTYPE html>
@@ -17,13 +18,22 @@ const html = `
   <body>
     <div id= "root"><div>
     <script>
+    const handleError = (err) =>{
+      const root = document.getElementById('root');
+      root.innerHTML = '<div style="color:red;"><h4>Runtime Error</h4>'+ err +'</div>'
+      console.error(err);
+    }
+
+    window.addEventListener('error', e => {
+      e.preventDefault();
+      handleError(e.error);
+    });
+
     window.addEventListener('message', e => {
       try {
         eval(e.data);
       } catch(err){
-        const root = document.getElementById('root');
-        root.innerHTML = '<div style="color:red;"><h4>Runtime Error</h4>'+ err +'</div>'
-        console.error(err)
+        handleError(err)
       }
     },false)
     </script>
@@ -31,13 +41,17 @@ const html = `
 </html>
 `;
 
-const Preview: React.FC<PreviewProps> = ({ code }) => {
+const Preview: React.FC<PreviewProps> = ({ code, error }) => {
   const iframe = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     if (iframe.current) {
       iframe.current.srcdoc = html;
-      iframe.current.contentWindow?.postMessage(code, '*');
+      setTimeout(() => {
+        if (iframe.current) {
+          iframe.current.contentWindow?.postMessage(code, '*');
+        }
+      }, 50);
     }
   }, [code]);
 
@@ -49,6 +63,12 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
         sandbox='allow-scripts'
         srcDoc={html}
       />
+      {error && (
+        <div className='preview-error'>
+          <h4 style={{ fontWeight: 'bold' }}>Build Error</h4>
+          {error}
+        </div>
+      )}
     </div>
   );
 };
