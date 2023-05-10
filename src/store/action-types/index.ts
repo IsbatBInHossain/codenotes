@@ -1,4 +1,4 @@
-import { CellType, Directions } from '../types';
+import { CellType, Directions } from './sliceTypes';
 
 export interface UpdateCellAction {
   id: string;

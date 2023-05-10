@@ -1,5 +1,5 @@
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
-import { Cell } from '../types';
+import { Cell } from '../action-types/sliceTypes';
 import {
   UpdateCellAction,
   DeleteCellAction,
