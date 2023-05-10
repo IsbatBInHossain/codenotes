@@ -13,6 +13,8 @@
     "@babel/parser": "^7.21.8",
     "@babel/traverse": "^7.21.5",
     "@monaco-editor/react": "^4.5.0",
+    "@reduxjs/toolkit": "^1.9.5",
+    "@types/react-redux": "^7.1.25",
     "@uiw/react-md-editor": "^3.20.10",
     "axios": "^1.4.0",
     "bulmaswatch": "^0.8.1",
@@ -23,7 +25,9 @@
     "prettier": "^2.8.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-resizable": "^3.0.5"
+    "react-redux": "^8.0.5",
+    "react-resizable": "^3.0.5",
+    "redux": "^4.2.1"
   },
   "devDependencies": {
     "@types/babel__traverse": "^7.18.5",
