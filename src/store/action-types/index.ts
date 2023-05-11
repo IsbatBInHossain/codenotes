@@ -12,7 +12,7 @@ export interface MoveCellAction {
   id: string;
   direction: Directions;
 }
-export interface InsertBeforeCellAction {
+export interface InsertCellAfterAction {
   id: string | null;
   type: CellType;
 }

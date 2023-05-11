@@ -4,7 +4,7 @@ import {
   UpdateCellAction,
   DeleteCellAction,
   MoveCellAction,
-  InsertBeforeCellAction,
+  InsertCellAfterAction,
 } from '../action-types';
 
 interface cellState {
@@ -44,26 +44,29 @@ export const cellsSlice = createSlice({
       state.order[index] = state.order[newIndex];
       state.order[newIndex] = action.payload.id;
     },
-    insertBeforeCell: (
-      state,
-      action: PayloadAction<InsertBeforeCellAction>
-    ) => {
+    insertAfterCell: (state, action: PayloadAction<InsertCellAfterAction>) => {
       const cell: Cell = {
         content: '',
         type: action.payload.type,
         id: nanoid(),
       };
       state.data[cell.id] = cell;
-      if (!action.payload.id) {
-        state.order.push(cell.id);
+      const index = state.order.findIndex(id => id === action.payload.id);
+      if (index < 0) {
+        state.order.unshift(cell.id);
       } else {
-        const index = state.order.findIndex(id => id === action.payload.id);
-        state.order.splice(index, 0, cell.id);
+        state.order.splice(index + 1, 0, cell.id);
       }
+      // if (!action.payload.id) {
+      //   state.order.push(cell.id);
+      // } else {
+      //   const index = state.order.findIndex(id => id === action.payload.id);
+      //   state.order.splice(index, 0, cell.id);
+      // }
     },
   },
 });
 
-export const { updateCell, moveCell, deleteCell, insertBeforeCell } =
+export const { updateCell, moveCell, deleteCell, insertAfterCell } =
   cellsSlice.actions;
 export const cellsReducer = cellsSlice.reducer;

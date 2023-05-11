@@ -5,7 +5,7 @@ export {
   updateCell,
   deleteCell,
   moveCell,
-  insertBeforeCell,
+  insertAfterCell,
 } from './slices/cellsSlice';
 
 export * from './action-types/sliceTypes';
