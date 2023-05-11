@@ -1,4 +1,4 @@
-// import CodeEditor from './CodeEditor';
+import CodeCell from './CodeCell';
 import { Cell } from '../store';
 import TextEditor from './TextEditor';
 interface CellListItemProps {
@@ -6,11 +6,13 @@ interface CellListItemProps {
 }
 
 const CellListItem: React.FC<CellListItemProps> = ({ cell }) => {
-  return (
-    <div>
-      {cell.id}
-      {/* <CodeEditor initialValue='// Write Code Here' onChange={}/> */}
-    </div>
-  );
+  let child: JSX.Element;
+
+  if (cell.type === 'code') {
+    child = <CodeCell cell={cell} />;
+  } else {
+    child = <TextEditor cell={cell} />;
+  }
+  return <div>{child}</div>;
 };
 export default CellListItem;

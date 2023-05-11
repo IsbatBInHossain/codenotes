@@ -6,7 +6,7 @@ import { useRef } from 'react';
 import './styles/CodeEditor.css';
 
 interface CodeEditorProps {
-  initialValue: string;
+  initialValue?: string;
   onChange(value: string | undefined): void;
 }
 

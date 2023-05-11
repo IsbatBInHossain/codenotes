@@ -13,15 +13,15 @@ store.dispatch({
   type: 'cells/insertBeforeCell',
   payload: {
     id: null,
-    type: 'code',
+    type: 'markdown',
   },
 });
-store.dispatch({
-  type: 'cells/insertBeforeCell',
-  payload: {
-    id: null,
-    type: 'code',
-  },
-});
+// store.dispatch({
+//   type: 'cells/insertBeforeCell',
+//   payload: {
+//     id: null,
+//     type: 'code',
+//   },
+// });
 
 // console.log(store.getState());
