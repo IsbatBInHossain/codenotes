@@ -2,8 +2,8 @@ import * as esbuild from 'esbuild-wasm';
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 import { fetchPlugin } from './plugins/fetch-plugin';
 
-let service = false;
-export default async (rawCode: string) => {
+const buildInitialize = async () => {
+  let service = false;
   if (!service) {
     await esbuild.initialize({
       worker: true,
@@ -11,6 +11,10 @@ export default async (rawCode: string) => {
     });
     service = true;
   }
+};
+await buildInitialize();
+
+export default async (rawCode: string) => {
   try {
     const result = await esbuild.build({
       entryPoints: ['index.js'],

@@ -29,3 +29,10 @@ store.dispatch({
     type: 'markdown',
   },
 });
+store.dispatch({
+  type: 'cells/insertBeforeCell',
+  payload: {
+    id: null,
+    type: 'code',
+  },
+});
