@@ -35,8 +35,8 @@ const TextEditor: React.FC<TextEditorProps> = ({ cell }) => {
       <div ref={ref} className='text-editor'>
         <MDEditor
           value={cell.content}
-          onChange={v =>
-            dispatch(updateCell({ id: cell.id, content: v || '' }))
+          onChange={value =>
+            dispatch(updateCell({ id: cell.id, content: value || '' }))
           }
         />
       </div>

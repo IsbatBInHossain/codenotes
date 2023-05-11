@@ -32,7 +32,7 @@ export const cellsSlice = createSlice({
     },
     deleteCell: (state, action: PayloadAction<DeleteCellAction>) => {
       delete state.data[action.payload.id];
-      state.order.filter(id => id != action.payload.id);
+      state.order = state.order.filter(id => id != action.payload.id);
     },
     moveCell: (state, action: PayloadAction<MoveCellAction>) => {
       const { direction } = action.payload;
