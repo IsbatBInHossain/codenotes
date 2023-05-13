@@ -14,13 +14,18 @@ export default function CodeCell({ cell }: CodeCellProps): JSX.Element {
 
   const [loading, error, runBundler] = useCreateBundle();
   const dispatch = useAppDispatch();
+
   useEffect(() => {
+    if (!bundle) {
+      runBundler({ id: cell.id, input: cell.content });
+      return;
+    }
     const timer = setTimeout(async () => {
       runBundler({ id: cell.id, input: cell.content });
     }, 1000);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cell]);
+  }, [cell, runBundler]);
 
   const onChange = (value: string | undefined) => {
     dispatch(updateCell({ id: cell.id, content: value || '' }));
@@ -32,7 +37,17 @@ export default function CodeCell({ cell }: CodeCellProps): JSX.Element {
         <ResizableComponent direction='horizontal'>
           <CodeEditor initialValue={cell.content} onChange={onChange} />
         </ResizableComponent>
-        {bundle && <Preview code={bundle.code} error={bundle.error} />}
+        <div className='progress-wrapper'>
+          {!bundle || loading ? (
+            <div className='progress-cover'>
+              <progress className='progress is-small is-primary' max='100'>
+                Loading
+              </progress>
+            </div>
+          ) : (
+            <Preview code={bundle.code} error={error} />
+          )}
+        </div>
       </div>
     </ResizableComponent>
   );
