@@ -11,21 +11,35 @@ interface CodeCellProps {
 
 export default function CodeCell({ cell }: CodeCellProps): JSX.Element {
   const bundle = useAppSelector(state => state.bundlesReducer[cell.id]);
+  const cumulativeCode = useAppSelector(state => {
+    const { data, order } = state.cellsReducer;
+    const cumulativeCode = [];
+    const orderedCells = order.map(id => data[id]);
+    for (const c of orderedCells) {
+      if (c.type === 'code') {
+        cumulativeCode.push(c.content);
+      }
+      if (c.id === cell.id) {
+        break;
+      }
+    }
+    return cumulativeCode;
+  });
 
   const [loading, error, runBundler] = useCreateBundle();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!bundle) {
-      runBundler({ id: cell.id, input: cell.content });
+      runBundler({ id: cell.id, input: cumulativeCode.join('\n') });
       return;
     }
     const timer = setTimeout(async () => {
-      runBundler({ id: cell.id, input: cell.content });
+      runBundler({ id: cell.id, input: cumulativeCode.join('\n') });
     }, 1000);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cell, runBundler]);
+  }, [cell, runBundler, cumulativeCode]);
 
   const onChange = (value: string | undefined) => {
     dispatch(updateCell({ id: cell.id, content: value || '' }));
