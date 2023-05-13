@@ -5,7 +5,7 @@ import CellListItem from './CellListItem';
 import './styles/CellList.css';
 
 const CellList: React.FC = () => {
-  const cellOrder = useAppSelector(({ order, data }) =>
+  const cellOrder = useAppSelector(({ cellsReducer: { order, data } }) =>
     order.map(id => data[id])
   );
   const renderedCell = cellOrder.map(cell => (

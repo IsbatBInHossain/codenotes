@@ -16,3 +16,14 @@ export interface InsertCellAfterAction {
   id: string | null;
   type: CellType;
 }
+export interface BundleStartAction {
+  id: string;
+}
+
+export interface BundleCompleteAction {
+  id: string;
+  bundle: {
+    code: string;
+    error: string;
+  };
+}

@@ -1,26 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import CodeEditor from './CodeEditor';
 import Preview from './Preview';
-import bundler from '../bundler';
 import ResizableComponent from './Resizable';
 import './styles/CodeCell.css';
-import { Cell, updateCell, useAppDispatch } from '../store';
+import { Cell, updateCell, useAppDispatch, useAppSelector } from '../store';
+import { useCreateBundle } from '../store';
 interface CodeCellProps {
   cell: Cell;
 }
 
 export default function CodeCell({ cell }: CodeCellProps): JSX.Element {
-  const [code, setCode] = useState('');
-  const [error, setError] = useState('');
+  const bundle = useAppSelector(state => state.bundlesReducer[cell.id]);
+
+  const [loading, error, runBundler] = useCreateBundle();
   const dispatch = useAppDispatch();
   useEffect(() => {
     const timer = setTimeout(async () => {
-      const output = await bundler(cell.content);
-      setCode(output.code);
-      setError(output.error);
+      runBundler({ id: cell.id, input: cell.content });
     }, 1000);
     return () => clearTimeout(timer);
-  }, [cell.content]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cell]);
 
   const onChange = (value: string | undefined) => {
     dispatch(updateCell({ id: cell.id, content: value || '' }));
@@ -32,7 +32,7 @@ export default function CodeCell({ cell }: CodeCellProps): JSX.Element {
         <ResizableComponent direction='horizontal'>
           <CodeEditor initialValue={cell.content} onChange={onChange} />
         </ResizableComponent>
-        <Preview code={code} error={error} />
+        {bundle && <Preview code={bundle.code} error={bundle.error} />}
       </div>
     </ResizableComponent>
   );

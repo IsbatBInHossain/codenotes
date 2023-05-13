@@ -57,12 +57,6 @@ export const cellsSlice = createSlice({
       } else {
         state.order.splice(index + 1, 0, cell.id);
       }
-      // if (!action.payload.id) {
-      //   state.order.push(cell.id);
-      // } else {
-      //   const index = state.order.findIndex(id => id === action.payload.id);
-      //   state.order.splice(index, 0, cell.id);
-      // }
     },
   },
 });

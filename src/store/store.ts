@@ -1,8 +1,12 @@
+import { bundlesReducer } from './slices/bundlesSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import { cellsReducer } from './slices/cellsSlice';
 
 export const store = configureStore({
-  reducer: cellsReducer,
+  reducer: {
+    cellsReducer,
+    bundlesReducer,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
@@ -27,12 +31,5 @@ store.dispatch({
   payload: {
     id: null,
     type: 'markdown',
-  },
-});
-store.dispatch({
-  type: 'cells/insertBeforeCell',
-  payload: {
-    id: null,
-    type: 'code',
   },
 });
