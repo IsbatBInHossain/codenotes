@@ -3,7 +3,13 @@ import CodeEditor from './CodeEditor';
 import Preview from './Preview';
 import ResizableComponent from './Resizable';
 import './styles/CodeCell.css';
-import { Cell, updateCell, useAppDispatch, useAppSelector } from '../store';
+import {
+  Cell,
+  updateCell,
+  useAppDispatch,
+  useAppSelector,
+  useCumulativeCode,
+} from '../store';
 import { useCreateBundle } from '../store';
 interface CodeCellProps {
   cell: Cell;
@@ -11,31 +17,19 @@ interface CodeCellProps {
 
 export default function CodeCell({ cell }: CodeCellProps): JSX.Element {
   const bundle = useAppSelector(state => state.bundlesReducer[cell.id]);
-  const cumulativeCode = useAppSelector(state => {
-    const { data, order } = state.cellsReducer;
-    const cumulativeCode = [];
-    const orderedCells = order.map(id => data[id]);
-    for (const c of orderedCells) {
-      if (c.type === 'code') {
-        cumulativeCode.push(c.content);
-      }
-      if (c.id === cell.id) {
-        break;
-      }
-    }
-    return cumulativeCode;
-  });
+
+  const cumulativeCode = useCumulativeCode(cell.id);
 
   const [loading, error, runBundler] = useCreateBundle();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!bundle) {
-      runBundler({ id: cell.id, input: cumulativeCode.join('\n') });
+      runBundler({ id: cell.id, input: cumulativeCode });
       return;
     }
     const timer = setTimeout(async () => {
-      runBundler({ id: cell.id, input: cumulativeCode.join('\n') });
+      runBundler({ id: cell.id, input: cumulativeCode });
     }, 1000);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,5 +1,5 @@
 export * from './store';
-export * from './hooks/hooks';
+export * from './hooks/typedHooks';
 
 export {
   updateCell,
@@ -12,3 +12,4 @@ export {
 
 export * from './action-types/sliceTypes';
 export * from './hooks/useCreateBundle';
+export * from './hooks/useCumulativeCode';
