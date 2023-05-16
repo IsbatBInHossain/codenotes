@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/IsbatBInHossain/codenotes/issues"
   },
-  "homepage": "https://github.com/IsbatBInHossain/codenotes#readme"
+  "homepage": "https://github.com/IsbatBInHossain/codenotes#readme",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^6.6.2"
+  }
 }
