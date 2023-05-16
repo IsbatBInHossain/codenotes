@@ -13,6 +13,7 @@
     "local-api": "^1.0.0"
   },
   "devDependencies": {
+    "@types/node": "^20.1.5",
     "typescript": "^5.0.4"
   }
 }
