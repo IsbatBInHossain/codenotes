@@ -12,7 +12,9 @@ const buildInitialize = async () => {
     service = true;
   }
 };
-await buildInitialize();
+(async () => {
+  await buildInitialize();
+})();
 
 export default async (rawCode: string) => {
   try {
