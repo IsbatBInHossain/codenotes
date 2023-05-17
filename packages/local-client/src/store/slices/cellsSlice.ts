@@ -6,6 +6,7 @@ import {
   MoveCellAction,
   InsertCellAfterAction,
 } from '../action-types';
+import { fetchCells } from '../thunks/fetchCells';
 
 interface cellState {
   loading: boolean;
@@ -58,6 +59,21 @@ export const cellsSlice = createSlice({
         state.order.splice(index + 1, 0, cell.id);
       }
     },
+  },
+  extraReducers(builder) {
+    builder.addCase(fetchCells.pending, state => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(fetchCells.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.order = action.payload.map(cell => cell.id);
+      state.data = action.payload.reduce((acc, cell) => {
+        acc[cell.id] = cell;
+        return acc;
+      }, {} as cellState['data']);
+    });
   },
 });
 
