@@ -7,6 +7,7 @@ import {
   InsertCellAfterAction,
 } from '../action-types';
 import { fetchCells } from '../thunks/fetchCells';
+import { saveCells } from '../thunks/saveCells';
 
 interface cellState {
   loading: boolean;
@@ -73,6 +74,17 @@ export const cellsSlice = createSlice({
         acc[cell.id] = cell;
         return acc;
       }, {} as cellState['data']);
+    });
+    builder.addCase(fetchCells.rejected, (state, action) => {
+      state.loading = false;
+      if (action.error.message) {
+        state.error = action.error.message;
+      }
+    });
+    builder.addCase(saveCells.rejected, (state, action) => {
+      if (action.error.message) {
+        state.error = action.error.message;
+      }
     });
   },
 });

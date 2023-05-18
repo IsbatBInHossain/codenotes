@@ -12,24 +12,24 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-store.dispatch({
-  type: 'cells/insertAfterCell',
-  payload: {
-    id: null,
-    type: 'markdown',
-  },
-});
-store.dispatch({
-  type: 'cells/insertAfterCell',
-  payload: {
-    id: null,
-    type: 'code',
-  },
-});
-store.dispatch({
-  type: 'cells/insertAfterCell',
-  payload: {
-    id: null,
-    type: 'markdown',
-  },
-});
+// store.dispatch({
+//   type: 'cells/insertAfterCell',
+//   payload: {
+//     id: null,
+//     type: 'markdown',
+//   },
+// });
+// store.dispatch({
+//   type: 'cells/insertAfterCell',
+//   payload: {
+//     id: null,
+//     type: 'code',
+//   },
+// });
+// store.dispatch({
+//   type: 'cells/insertAfterCell',
+//   payload: {
+//     id: null,
+//     type: 'markdown',
+//   },
+// });
