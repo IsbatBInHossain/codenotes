@@ -1,5 +1,5 @@
 import { Fragment, useEffect } from 'react';
-import { fetchCells, saveCells, useAppSelector, useThunk } from '../store';
+import { fetchCells, useAppSelector, useThunk } from '../store';
 import AddCell from './AddCell';
 import CellListItem from './CellListItem';
 import './styles/CellList.css';
@@ -9,15 +9,10 @@ const CellList: React.FC = () => {
     order.map(id => data[id])
   );
   const { runThunk: runFetch } = useThunk(fetchCells);
-  const { runThunk: runSave } = useThunk(saveCells);
 
   useEffect(() => {
     runFetch();
-  }, []);
-
-  useEffect(() => {
-    runSave();
-  }, [JSON.stringify(cellOrder)]);
+  }, [runFetch]);
 
   const renderedCell = cellOrder.map(cell => (
     <Fragment key={cell.id}>

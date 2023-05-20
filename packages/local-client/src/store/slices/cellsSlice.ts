@@ -7,7 +7,7 @@ import {
   InsertCellAfterAction,
 } from '../action-types';
 import { fetchCells } from '../thunks/fetchCells';
-import { saveCells } from '../thunks/saveCells';
+// import { saveCells } from '../thunks/saveCells';
 
 interface cellState {
   loading: boolean;
@@ -81,10 +81,8 @@ export const cellsSlice = createSlice({
         state.error = action.error.message;
       }
     });
-    builder.addCase(saveCells.rejected, (state, action) => {
-      if (action.error.message) {
-        state.error = action.error.message;
-      }
+    builder.addCase('save/cells/rejected', state => {
+      state.error = 'Failed to save';
     });
   },
 });
