@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { serve } from 'local-api';
+import { serve } from '@js-codenotes/local-api';
 import path from 'path';
 type CustomError = Error & {
   code: string;

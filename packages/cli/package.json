@@ -1,19 +1,29 @@
 {
-  "name": "cli",
+  "name": "js-codenotes",
   "version": "1.0.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "description": "",
   "scripts": {
-    "start": "tsc --watch --preserveWatchOutput"
+    "start": "tsc --watch --preserveWatchOutput",
+    "prepublishOnly": "esbuild src/index.ts --platform=node --outfile=dist/index.js --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "commander": "^10.0.1",
-    "local-api": "^1.0.0"
+    "@js-codenotes/local-client": "^0.0.0"
   },
   "devDependencies": {
+    "@js-codenotes/local-api": "^1.0.0",
+    "commander": "^10.0.1",
     "@types/node": "^20.1.5",
+    "esbuild": "^0.17.19",
     "typescript": "^5.0.4"
   }
 }
