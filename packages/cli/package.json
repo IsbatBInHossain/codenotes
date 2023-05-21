@@ -1,5 +1,5 @@
 {
-  "name": "js-codenotes",
+  "name": "@isbat/codenotes",
   "version": "1.0.0",
   "publishConfig": {
     "access": "public"
@@ -25,5 +25,6 @@
     "commander": "^10.0.1",
     "esbuild": "^0.17.19",
     "typescript": "^5.0.4"
-  }
+  },
+  "gitHead": "9a203c909c06d367d3872ab40850bf010afb8042"
 }
