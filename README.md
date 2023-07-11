@@ -4,19 +4,19 @@ Codenotes is a note-taking app that allows you to take notes in code. You can us
 
 ## Features
 
-    * Take notes in code
-    * Write code snippets
-    * Write documentation
-    * Create entire projects
-    * Organize your notes
-    * Find your notes quickly
-    * Run JS code in a sandboxed environment
-    * Import any library you want
-    * Cache all downloaded libraries for offline use
-    * Show any piece of data (even React components) on the screen
-    * Access code from upper code cells in lower code cells
-    * Get any element in the code document via document.querySelector
-    * Create text cells
+- Take notes in code
+- Write code snippets
+- Write documentation
+- Create entire projects
+- Organize your notes
+- Find your notes quickly
+- Run JS code in a sandboxed environment
+- Import any library you want
+- Cache all downloaded libraries for offline use
+- Show any piece of data (even React components) on the screen
+- Access code from upper code cells in lower code cells
+- Get any element in the code document via document.querySelector
+- Create text cells
 
 ## Limitations
 
@@ -28,14 +28,14 @@ Another limitation is that you cannot use Codenotes to run code that requires ac
 
 Codenotes is built on the following technology stack:
 
-    * React
-    * TypeScript
-    * Redux
-    * bulmaCSS
-    * esBuild-wasm
+- React
+- TypeScript
+- Redux
+- bulmaCSS
+- esBuild-wasm
 
 ## Contact
 
-If you have any questions or feedback, please contact the author of Codenotes at [email protected]
+If you have any questions or feedback, please contact the author of Codenotes at isbatbinhossain@gmail.com
 
 Note: At the moment, only JS and JSX are supported.
